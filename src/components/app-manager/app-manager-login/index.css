@@ -1,0 +1,26 @@
+.app-manager-login{
+  margin: 0 auto;
+  width: 368px;
+}
+
+.app-manager-login-mobileNumber, .app-manager-login-password{
+  height: 40px;
+}
+
+.app-manager-login-forgetPassword{
+  float: right;
+  color: #1890ff;
+  cursor: pointer;
+}
+
+.app-manager-login-submit{
+  margin-bottom: 15px;
+  width: 100%;
+  height: 40px;
+}
+
+.app-manager-login-register{
+  float: right;
+  color: #1890ff;
+  cursor: pointer;
+}
