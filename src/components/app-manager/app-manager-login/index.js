@@ -1,9 +1,34 @@
 import React from 'react';
-import { Form, Input, Icon, Button, Checkbox } from 'antd';
+import { Form, Input, Icon, Button, Checkbox, message } from 'antd';
+import { doChangeManagerLoginFields, doSubmitLogin, doChangeManagerLoginType } from '../../../redux/action/manager';
+import { connect } from 'react-redux';
 import './index.css';
 const FormItem = Form.Item;
 
 export class AppManagerLogin extends React.Component{
+  constructor(props){
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  componentWillMount(){
+    this.props.onChangeManagerLoginFields({
+      mobileNumber: {
+        value: ''
+      },
+      password: {
+        value: ''
+      }
+    })
+  }
+  handleSubmit(){
+    this.props.form.validateFields(["mobileNumber","password"],(errors,values)=>{
+      if(!errors && !this.props.isLogging){
+        this.props.onSubmitLogin(values["mobileNumber"],values["password"], () => {
+          message.info('登录成功')
+        })
+      }
+    })
+  }
   render(){
     const { getFieldDecorator } = this.props.form;
     return (
@@ -39,23 +64,52 @@ export class AppManagerLogin extends React.Component{
           })(
             <Checkbox>自动登录</Checkbox>
           )}
-          <span className="app-manager-login-forgetPassword">忘记密码</span>
+          <span className="app-manager-login-forgetPassword" onClick={()=>this.props.onChangeManagerLoginType('resetPassword')}>忘记密码</span>
         </FormItem>
         <Button
           type="primary"
           htmlType="submit"
           className="app-manager-login-submit"
+          loading={this.props.isLogging}
+          onClick={this.handleSubmit}
         >
           登录
         </Button>
-        <p><span className="app-manager-login-register">注册新账号</span></p>
+        <p><span className="app-manager-login-register" onClick={()=>this.props.onChangeManagerLoginType('register')}>注册新账号</span></p>
       </Form>  
     )
   }
 }
 
 const option = {
-
+  onFieldsChange(props, changedFields) {
+    props.onChangeManagerLoginFields(changedFields);
+  },
+  mapPropsToFields(props) {
+    return {
+      mobileNumber: Form.createFormField({
+        ...props.loginFields.mobileNumber
+      }),
+      password: Form.createFormField({
+        ...props.loginFields.password
+      })
+    };
+  }
 }
 
-export default Form.create(option)(AppManagerLogin);
+const mapStateToProps = (state) => {
+  return {
+    loginFields : state.manager.loginFields,
+    isLogging : state.manager.isLogging
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    onChangeManagerLoginFields: (fieldsChanged) => dispatch(doChangeManagerLoginFields(fieldsChanged)),
+    onSubmitLogin: (mobileNumber, password) => dispatch(doSubmitLogin(mobileNumber, password)),
+    onChangeManagerLoginType: (loginType) => dispatch(doChangeManagerLoginType(loginType))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form.create(option)(AppManagerLogin));

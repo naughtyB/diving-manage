@@ -1,0 +1,24 @@
+.app-manager-register{
+  margin: 0 auto;
+  width: 368px;
+}
+
+.app-manager-register-captcha{
+  display: flex;
+  align-items: center;
+  height: 40px;
+  width: 100%;
+}
+
+.app-manager-register-submit-input{
+  width: 150px;
+  height: 40px;
+}
+
+.app-manager-register-hadMobileNumber{
+  float: right;
+  height: 40px;
+  line-height: 40px;
+  color: #1890ff;
+  cursor: pointer;
+}

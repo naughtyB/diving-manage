@@ -1,43 +1,78 @@
 import React from 'react';
-import { Menu, Icon, Switch } from 'antd';
+import { Menu, Icon } from 'antd';
+import { withRouter } from 'react-router-dom';
 const SubMenu = Menu.SubMenu;
 
 class AppSiderMenu extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      current: '1'
+      openKeys : ['pageManage'],
+      selectedKeys : ['homepage']
     }
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);   
+    this.handleOpenChange = this.handleOpenChange.bind(this); 
   }
-  handleClick(e){
-    console.log('click ', e);
-    this.setState({
-      current: e.key,
-    });
+  componentWillMount(){
+    let pathname = this.props.location.pathname;
+    if(/\/([^\/]+?)\/([^\/]+)/.test(pathname)){
+      this.setState({
+        openKeys: [pathname.replace(/\/([^\/]+?)\/[\s\S]+/, '$1')],
+        selectedKeys: [pathname.replace(/\/([^\/]+?)\/([^\/]+)(\/)*[\S\s]*/, '$2')]
+      })
+    }
+  }
+  componentWillUpdate(nextProps){
+    let pathname = this.props.location.pathname;
+    let nextPathname = nextProps.location.pathname;
+    if(pathname !== nextPathname && /\/([^\/]+?)\/([^\/]+)/.test(nextPathname)){
+      this.setState({
+        openKeys: [nextPathname.replace(/\/([^\/]+?)\/[\s\S]+/, '$1')],
+        selectedKeys: [nextPathname.replace(/\/([^\/]+?)\/([^\/]+)(\/)*[\S\s]*/, '$2')]
+      })
+    }
+    if(this.props.collapsed !== nextProps.collapsed && nextProps.collapsed){
+      this.setState({
+        openKeys: []
+      })
+    }
+  }
+  handleSelect({ item, key, selectedKeys }){
+    if(selectedKeys[0] !== this.state.selectedKeys[0]){
+      this.props.history.push({
+        pathname: '/' + item.props.openKeys[0] + '/' + selectedKeys[0]
+      })
+    }
+  }
+  handleOpenChange(openKeys){
+    if(openKeys[1] !== this.state.openKeys[0]){
+      this.setState({
+        openKeys: [openKeys[1]]
+      })
+    }
+    else{
+      this.setState({
+        openKeys: ['']
+      })
+    }
   }
   render() {
     return (
       <Menu
         theme="dark"
-        onClick={this.handleClick}
-        defaultOpenKeys={['sub1']}
-        selectedKeys={[this.state.current]}
+        selectedKeys={this.state.selectedKeys}
+        onOpenChange={this.handleOpenChange}
+        onSelect={this.handleSelect}
+        openKeys={this.state.openKeys}
         mode="inline"
       >
-        <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>
-          <Menu.Item key="1">Option 1</Menu.Item>
-          <Menu.Item key="2">Option 2</Menu.Item>
-          <Menu.Item key="3">Option 3</Menu.Item>
-          <Menu.Item key="4">Option 4</Menu.Item>
+        <SubMenu key="pageManage" title={<span><Icon type="appstore"/><span>页面管理</span></span>}>
+          <Menu.Item key="homepage">首页管理</Menu.Item>
+          <Menu.Item key="course">课程管理</Menu.Item>
         </SubMenu>
-        <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>Navigtion Two</span></span>}>
+        <SubMenu key="sub2" title={<span><Icon type="mail" /><span>Navigtion Two</span></span>}>
           <Menu.Item key="5">Option 5</Menu.Item>
           <Menu.Item key="6">Option 6</Menu.Item>
-          <SubMenu key="sub3" title="Submenu">
-            <Menu.Item key="7">Option 7</Menu.Item>
-            <Menu.Item key="8">Option 8</Menu.Item>
-          </SubMenu>
         </SubMenu>
         <SubMenu key="sub4" title={<span><Icon type="setting" /><span>Navigation Three</span></span>}>
           <Menu.Item key="9">Option 9</Menu.Item>
@@ -50,4 +85,4 @@ class AppSiderMenu extends React.Component {
   }
 }
 
-export default AppSiderMenu;
+export default withRouter(AppSiderMenu);

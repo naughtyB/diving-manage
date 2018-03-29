@@ -1,8 +1,36 @@
 import React from 'react';
 import AppManagerLogin from './app-manager-login/index.js';
+import AppManagerRegister from './app-manager-register/index.js';
+import AppManagerResetPassword from './app-manager-modifyPassword/index.js';
+import { doChangeManagerLoginType, doChangeManagerLoginState } from '../../redux/action/manager.js';
+import { connect } from 'react-redux';
 import './index.css';
+import fetch from 'isomorphic-fetch';
+import Promise from 'promise-polyfill';
+import Cookies from 'js-cookie'; 
+//兼容性处理
+if(!window.Promise){
+    window.Promise=Promise
+}
 
 export class AppManager extends React.Component{
+  componentWillMount(){
+    if(Cookies.get('mobileNumber') && Cookies.get('managerId')){
+      fetch('/server/manager/autoLogin', {
+        method: 'post',
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        credentials: 'include'
+      }).then(res => {
+        return res.json();
+      }).then(res => {
+        if(res.isCorrect){
+          this.props.onChangeManagerLoginState(true, res.managerData)
+        }
+      })
+    }
+  }
   render(){
     return (
       <div className="app-manager">
@@ -13,10 +41,24 @@ export class AppManager extends React.Component{
         <div className="desc">
           Ant Design 是西湖区最具影响力的 Web 设计规范
         </div>
-        <AppManagerLogin />
+        {
+          this.props.loginType === 'login' ? <AppManagerLogin /> : (this.props.loginType === 'register' ? <AppManagerRegister/> : <AppManagerResetPassword/>)
+        }
       </div>
     )
   }
 }
 
-export default AppManager;
+const mapStateToProps = (state) => {
+  return {
+    loginType: state.manager.loginType
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onChangeManagerLoginState: (loginState, managerData) => dispatch(doChangeManagerLoginState(loginState, managerData))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppManager);

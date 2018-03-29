@@ -5,13 +5,17 @@
   "private": true,
   "dependencies": {
     "antd": "^3.3.3",
+    "braft-editor": "^1.8.3",
+    "isomorphic-fetch": "^2.2.1",
+    "js-cookie": "^2.2.0",
+    "promise-polyfill": "^7.1.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0",
-    "react-redux": "^5.0.7",
-    "react-router-dom": "^4.2.2"
+    "redux-thunk": "^2.2.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -20,6 +24,8 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "babel-plugin-import": "^1.6.7",
+    "react-app-rewire-less": "^2.1.1",
     "react-app-rewired": "^1.5.0"
   }
 }
