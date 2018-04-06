@@ -69,6 +69,7 @@ class AppSiderMenu extends React.Component {
         <SubMenu key="pageManage" title={<span><Icon type="appstore"/><span>页面管理</span></span>}>
           <Menu.Item key="homepage">首页管理</Menu.Item>
           <Menu.Item key="course">课程管理</Menu.Item>
+          <Menu.Item key="practice">练习管理</Menu.Item>
         </SubMenu>
         <SubMenu key="sub2" title={<span><Icon type="mail" /><span>Navigtion Two</span></span>}>
           <Menu.Item key="5">Option 5</Menu.Item>

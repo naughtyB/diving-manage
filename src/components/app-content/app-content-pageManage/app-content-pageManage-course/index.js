@@ -9,7 +9,7 @@ export class AppContentPageManageCourse extends React.Component{
   }
   render(){
     return (
-      <div style={{padding: '24px'}}>
+      <div className="app-scrollbar" style={{padding: '24px', margin: '24px 16px', backgroundColor: '#fff'}}>
         <Route
           key="course"
           exact

@@ -49,7 +49,7 @@ class AppLayout extends React.Component {
                   onClick={this.toggle}
                 />
               </Header>
-              <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
+              <Content style={{background: 'rgb(240,242,245)', height: '100%', overflow: 'hidden', marginBottom: '24px' }}>
                 <AppContent/>
               </Content>
             </Layout>

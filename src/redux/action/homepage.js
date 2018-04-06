@@ -23,6 +23,12 @@ export const ADD_BANNER_LINK_RECEIVE_SUCCESS_POST = 'ADD_BANNER_LINK_RECEIVE_SUC
 
 export const ADD_BANNER_LINK_RECEIVE_ERROR_POST = 'ADD_BANNER_LINK_RECEIVE_ERROR_POST';
 
+export const DELETE_BANNER_REQUEST_POST = 'DELETE_BANNER_REQUEST_POST';
+
+export const DELETE_BANNER_RECEIVE_SUCCESS_POST = 'DELETE_BANNER_RECEIVE_SUCCESS_POST';
+
+export const DELETE_BANNER_RECEIVE_ERROR_POST = 'DELETE_BANNER_RECEIVE_ERROR_POST';
+
 export const doGetHomepageDataRequestPost = () => {
   return {
     type: GET_HOMEPAGE_DATA_REQUEST_POST
@@ -106,7 +112,7 @@ export const doAddBannerLinkReceiveErrorPost = () => {
 
 export const doAddBannerLink = (homepageId, url, link) => (dispatch) => {
   dispatch(doAddBannerLinkRequestPost());
-  return fetch('/homepage/addBannerLink', {
+  return fetch('/server/homepage/addBannerLink', {
     method: 'post',
     headers: {
       'content-type': 'application/x-www-form-urlencoded'
@@ -120,6 +126,45 @@ export const doAddBannerLink = (homepageId, url, link) => (dispatch) => {
     }
     else{
       dispatch(doAddBannerLinkReceiveSuccessPost(res.homepageData))
+    }
+  })
+}
+
+export const doDeleteBannerRequestPost = () => {
+  return {
+    type: DELETE_BANNER_REQUEST_POST
+  }
+}
+
+export const doDeleteBannerReceiveSuccessPost = (homepageData) => {
+  return {
+    type: DELETE_BANNER_RECEIVE_SUCCESS_POST,
+    homepageData
+  }
+}
+
+export const doDeleteBannerReceiveErrorPost = () => {
+  return {
+    type: DELETE_BANNER_RECEIVE_ERROR_POST
+  }
+}
+
+export const doDeleteBanner = (homepageId, url) => (dispatch) => {
+  dispatch(doDeleteBannerRequestPost());
+  return fetch('/server/homepage/deleteHomepageBanner', {
+    method: 'post',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded'
+    },
+    body: 'homepageId=' + decodeURIComponent(homepageId) + '&url=' + decodeURIComponent(url)
+  }).then(res => {
+    return res.json();
+  }).then(res => {
+    if(res.isSuccessful){
+      dispatch(doDeleteBannerReceiveErrorPost())
+    }
+    else{
+      dispatch(doDeleteBannerReceiveSuccessPost())
     }
   })
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Upload, Button, Icon, Spin, Tooltip, Modal, Input } from 'antd';
-import { doGetHomepageData, doChangeHomepageData, doChangeModalVisible, doChangeLinkInputValue, doAddBannerLink } from '../../../../redux/action/homepage.js';
+import { doGetHomepageData, doChangeHomepageData, doChangeModalVisible, doChangeLinkInputValue, doAddBannerLink, doDeleteBanner } from '../../../../redux/action/homepage.js';
 import { connect } from 'react-redux';
 import './index.css';
 
@@ -17,6 +17,7 @@ export class AppContentPageManageHomepage extends React.Component{
     this.handleAddLink = this.handleAddLink.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleAddLink = this.handleAddLink.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
   }
   componentWillMount(){
     this.props.onGetHomepageData((homepageData) => {
@@ -26,7 +27,7 @@ export class AppContentPageManageHomepage extends React.Component{
             return {
               uid: item['_id'],
               name: (
-                <Tooltip placement="topLeft" title={item.link ? '链接:' + item.link : '链接未编辑  请点击并编辑'}>
+                <Tooltip placement="topLeft" title={item.link ? '链接：' + item.link : '链接未编辑---请点击并编辑'}>
                   {item.url.replace(/[\S\s]+\/([^\/]+?)/, '$1')}
                 </Tooltip>
               ),
@@ -65,7 +66,6 @@ export class AppContentPageManageHomepage extends React.Component{
     this.props.onChangeModalVisible(true, file.url, file.link ? file.link.replace(/http:\/\/localhost:8000\/([\s\S]+)/, '$1') : '');
   }
   handleChange(info){
-    console.log(info.file);
     if(info.file.response && info.file.response.homepageData){
       this.props.onChangeHomepageData(info.file.response.homepageData)
     }
@@ -84,11 +84,16 @@ export class AppContentPageManageHomepage extends React.Component{
   handleInputChange(e){
     this.props.onChangeLinkInputValue(e.target.value)
   }
+  handleRemove(file){
+    console.log(this.props.homepageData['_id']);
+    console.log(file.url)
+    this.props.onDeleteBanner(this.props.homepageData['_id'], file.url)
+  }
   render(){
-    let { isGettingHomepageData, homepageData } = this.props;
+    let { isGettingHomepageData, homepageData, isDeletingBanner } = this.props;
     return (
-      <Spin spinning={isGettingHomepageData}>
-        <div style={{padding: '24px'}}>
+      <Spin spinning={isGettingHomepageData || isDeletingBanner}>
+        <div className="app-scrollbar" style={{padding: '24px', margin: '24px 16px', backgroundColor: '#fff'}}>
           <Upload 
             action="/uploadHomepage"
             listType="picture"
@@ -97,6 +102,7 @@ export class AppContentPageManageHomepage extends React.Component{
             fileList={this.state.fileList}
             onChange={this.handleChange}
             onPreview={this.handlePreview}
+            onRemove={this.handleRemove}
           >
             <Button>
               <Icon type="upload" /> 上传banner
@@ -124,7 +130,8 @@ const mapStateToProps = (state) => {
     modalVisible: state.homepage.modalVisible,
     currentUrl: state.homepage.currentUrl,
     linkInputValue: state.homepage.linkInputValue,
-    isAddingBannerLink: state.homepage.isAddingBannerLink
+    isAddingBannerLink: state.homepage.isAddingBannerLink,
+    isDeletingBanner: state.homepage.isDeletingBanner
   }
 }
 
@@ -134,7 +141,8 @@ const mapDispatchToProps = (dispatch) => {
     onChangeHomepageData: (homepageData) => dispatch(doChangeHomepageData(homepageData)),
     onChangeModalVisible: (modalVisible, currentUrl, linkInputValue) => dispatch(doChangeModalVisible(modalVisible, currentUrl, linkInputValue)),
     onChangeLinkInputValue: (linkInputValue) => dispatch(doChangeLinkInputValue(linkInputValue)),
-    onAddBannerLink: (homepageId, url, link) => dispatch(doAddBannerLink(homepageId, url ,link))
+    onAddBannerLink: (homepageId, url, link) => dispatch(doAddBannerLink(homepageId, url ,link)),
+    onDeleteBanner: (homepageId, url) => dispatch(doDeleteBanner(homepageId, url))
   }
 }
 

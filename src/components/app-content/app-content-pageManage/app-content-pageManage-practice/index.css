@@ -1,0 +1,91 @@
+.app-content-pageManage-practice-list{
+  height: 100%;
+}
+
+.app-content-pageManage-practice-list .brief-introduction{
+  display: flex;
+  padding: 16px 32px 0;
+  height: 166px;
+  background-color: white;
+}
+
+.app-content-pageManage-practice-list .brief-introduction-left{
+  flex: 1 1;
+  height: 150px;
+}
+
+.app-content-pageManage-practice-list .brief-introduction-left-title{
+  margin-top: 10px;
+  margin-bottom: 16px;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.app-content-pageManage-practice-list .brief-introduction-right{
+  width: 450px;
+  height: 150px;
+  text-align: center;
+}
+
+.app-content-pageManage-practice-list .brief-introduction-right-img{
+  width: 195px;
+  height: 130px;
+}
+
+.app-content-pageManage-practice-list .list-introduction{
+  padding: 24px 12px;
+}
+
+.app-content-pageManage-practice-list .list{
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.app-content-pageManage-practice-list .list-each{
+  margin-bottom: 20px;
+  padding-left: 12px;
+  padding-right: 12px;
+  width: 33%;
+  height: 145px;
+}
+
+.app-content-pageManage-practice-list .list-each .ant-card{
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content-pageManage-practice-list .list-each .ant-card-body{
+  flex: 1 1;
+}
+
+.app-content-pageManage-practice-list .list-each .ant-card-meta-avatar{
+  width: 64px;
+  height: 48px;
+}
+
+.app-content-pageManage-practice-list .list-each .ant-avatar{
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.app-content-pageManage-practice-list .list-each-add{
+  height: 100%;
+  width: 100%;
+  border: 1px dashed rgb(217,217,217);
+  color: rgba(0, 0, 0, 0.45);
+  background-color: white;
+  text-align: center;
+  line-height: 145px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.app-content-pageManage-practice-list .list-each-add:hover{
+  border-color: rgb(64, 169, 255);
+  color: rgb(64, 169, 255);
+}
