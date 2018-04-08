@@ -153,18 +153,20 @@ export class modifyCourse extends React.Component{
       <Spin spinning={this.props.isGettingCourseDetailData}>
         <Form>
           <FormItem
-              style={{width: '400px'}}
-              {...formItemLayout} 
-              label='潜水课程名称'
-            >
-              {getFieldDecorator('courseName', {
-                validateFirst: true,
-                rules: [
-                  { required: true, message: '请输入潜水课程名称' }
-                ]
-                })(
-                    <Input type="text"/>
-              )}
+            style={{width: '400px'}}
+            {...formItemLayout} 
+            label='潜水课程名称'
+          >
+            {getFieldDecorator('courseName', {
+              validateFirst: true,
+              rules: [
+                { required: true, message: '请输入潜水课程名称' }
+              ]
+              })
+              (
+                <Input type="text"/>
+              )
+            }
           </FormItem>
           <Alert 
             style={{marginBottom: '10px'}} 

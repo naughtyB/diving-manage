@@ -62,7 +62,6 @@ export class AppContentPageManageHomepage extends React.Component{
     }
   }
   handlePreview(file){
-    console.log(file.link)
     this.props.onChangeModalVisible(true, file.url, file.link ? file.link.replace(/http:\/\/localhost:8000\/([\s\S]+)/, '$1') : '');
   }
   handleChange(info){
@@ -85,8 +84,6 @@ export class AppContentPageManageHomepage extends React.Component{
     this.props.onChangeLinkInputValue(e.target.value)
   }
   handleRemove(file){
-    console.log(this.props.homepageData['_id']);
-    console.log(file.url)
     this.props.onDeleteBanner(this.props.homepageData['_id'], file.url)
   }
   render(){

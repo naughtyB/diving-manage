@@ -89,3 +89,81 @@
   border-color: rgb(64, 169, 255);
   color: rgb(64, 169, 255);
 }
+
+.app-content-pageManage-modifyPractice-list{
+  height: 100%;
+}
+
+.app-content-pageManage-modifyPractice-list .brief-introduction{
+  display: flex;
+  padding: 16px 32px 0;
+  height: 166px;
+  background-color: white;
+}
+
+.app-content-pageManage-modifyPractice-list .brief-introduction-left{
+  flex: 1 1;
+  height: 150px;
+}
+
+.app-content-pageManage-modifyPractice-list .brief-introduction-left-title{
+  margin-top: 10px;
+  margin-bottom: 16px;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.app-content-pageManage-modifyPractice-list .brief-introduction-right{
+  width: 450px;
+  height: 150px;
+  text-align: center;
+}
+
+.app-content-pageManage-modifyPractice-list .brief-introduction-right-img{
+  width: 195px;
+  height: 130px;
+}
+
+.app-content-pageManage-modifyPractice-list .form-field{
+  margin: 24px 24px 0;
+  padding: 24px;
+  background-color:white; 
+}
+
+.app-content-pageManage-modifyPractice-list .dropbox {
+  width: 400px;
+  height: 180px;
+  line-height: 1.5;
+}
+
+.app-content-pageManage-modifyPractice-list .ant-upload{
+  padding: 0;
+}
+
+.app-content-pageManage-modifyPractice-list .ant-upload-drag-container{
+  transition: all 0.5s;
+}
+
+.app-content-pageManage-modifyPractice-list .ant-upload-drag-container:hover{
+  background-color: rgba(250, 250, 250, 0.5)
+}
+
+.app-content-pageManage-modifyPractice-list .upload-content{
+  transition: all 0.5s;
+}
+
+.dynamic-delete-button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 24px;
+  color: #999;
+  transition: all .3s;
+}
+.dynamic-delete-button:hover {
+  color: #777;
+}
+.dynamic-delete-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

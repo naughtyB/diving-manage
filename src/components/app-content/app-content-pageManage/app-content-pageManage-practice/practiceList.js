@@ -6,9 +6,19 @@ import './index.css';
 const { Meta } = Card;
 
 export class PracticeList extends React.Component{
+  constructor(props){
+    super(props);
+    this.handleAdd = this.handleAdd.bind(this);
+  }
   componentWillMount(){
     this.props.onGetPracticeData(() => {
       message.info('获取数据失败，请重新刷新')
+    })
+  }
+  handleAdd(){
+    this.props.history.push({
+      pathname: '/pageManage/practice/modify',
+      hash: 'type=add'
     })
   }
   render(){
@@ -27,7 +37,7 @@ export class PracticeList extends React.Component{
           <div className="list-introduction">
             <ul className="list">
               <li className="list-each">
-                <div className="list-each-add">+ 新增练习</div>
+                <div className="list-each-add" onClick={this.handleAdd}>+ 新增练习</div>
               </li>
               {
                 this.props.practiceData.map((item, index) => {
